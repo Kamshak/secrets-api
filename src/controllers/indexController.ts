@@ -21,7 +21,7 @@ export function get(
     return;
   }
 
-  const configName = req.params.config;
+  const configName = req.params.configName;
   if (!configName) {
     res.status(400).send("Missing config name");
     return;
@@ -35,7 +35,8 @@ export function get(
 
   let credentials;
   try {
-    credentials = JSON.parse(authHeader);
+    credentials = JSON.parse(authHeader.replace("Bearer ", ""));
+    credentials["project_id"] = projectId;
   } catch (e) {
     res
       .status(401)
