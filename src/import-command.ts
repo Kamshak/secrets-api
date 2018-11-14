@@ -30,14 +30,14 @@ export async function run() {
   ImportVarsFromFile.flags = {
     configName: cmdFlags.string({
       char: "c",
-      required: true,
       description:
-        "The config name of the Runtime Config configuration where the values should be written to"
+        "The config name of the Runtime Config configuration where the values should be written to",
+      required: true
     }),
     file: cmdFlags.string({
       char: "f",
-      required: true,
-      description: "A file with one variable per line in format VAR_NAME=value"
+      description: "A file with one variable per line in format VAR_NAME=value",
+      required: true
     }),
     help: cmdFlags.help(),
     projectId: cmdFlags.string({
