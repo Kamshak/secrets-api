@@ -8,6 +8,9 @@ import { importVars } from "./import-helper";
 const auth = googleAuth();
 class ImportVarsFromFile extends Command {
   public static args = [{ name: "fileName" }];
+  public static id = "";
+  public static description =
+    "Imports variables from a file in .env format into Google Cloud Runtime Config";
 
   public async run() {
     const { flags, args } = this.parse(ImportVarsFromFile);
@@ -27,10 +30,14 @@ export async function run() {
   ImportVarsFromFile.flags = {
     configName: cmdFlags.string({
       char: "c",
-      required: true
+      required: true,
+      description:
+        "The config name of the Runtime Config configuration where the values should be written to"
     }),
     file: cmdFlags.string({
-      char: "f"
+      char: "f",
+      required: true,
+      description: "A file with one variable per line in format VAR_NAME=value"
     }),
     help: cmdFlags.help(),
     projectId: cmdFlags.string({

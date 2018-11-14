@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-require('..').run()
+require('../dist/import-command').run()
 .catch(require('@oclif/errors/handle'))
