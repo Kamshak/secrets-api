@@ -1,7 +1,7 @@
 {
   "name": "runtime-config-helper",
   "version": "0.0.0-development",
-  "private": true,
+  "private": false,
   "scripts": {
     "precommit": "lint-staged",
     "start": "node dist/server.js",
