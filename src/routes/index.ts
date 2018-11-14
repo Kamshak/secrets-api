@@ -4,6 +4,6 @@ import { get } from "../controllers/indexController";
 const router = express.Router();
 
 /* GET home page. */
-router.get("/", get);
+router.get("/:projectId/:configName", get);
 
 export default router;

@@ -5,7 +5,6 @@ import { NextFunction } from "express-serve-static-core";
 import * as helmet from "helmet";
 import StatusError from "./errors/StatusError";
 import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
 
 const app = express();
 
@@ -17,7 +16,6 @@ app.use(compression());
 
 // Routes
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // 404 - error handler
 // tslint:disable:variable-name

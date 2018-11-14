@@ -1,27 +1,33 @@
-# express-ts
+# Easy HTTP Interface to get Runtime Configuration for CI.
 
-Express using TypeScript starter project.
+To create a new config (needs access to the secrets project in gcloud):
+```
+gcloud beta runtime-config configs create 'projectname-production'
+gcloud beta runtime-config configs create 'projectname-staging'
+```
 
-This project was created following guides and best practises detailled below.
+To set variables (Variable names will be transformed from lowercase to uppercase, separated by underscores):
+```
+gcloud beta runtime-config configs variables set \
+    my-variable-name my-value \
+    --is-text --config-name projectname-staging
+```
+Will make MY_VARIABLE_NAME=my-value available.
 
-## Express
-Guides and best practises:
-- [Application skeleton generator](https://expressjs.com/en/starter/generator.html)
-- [TypeScript - Express starter project](https://github.com/Microsoft/TypeScript-Node-Starter#typescript-node-starter)
-- [MDN - Express starter project](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs)
-- [Security best practises](https://expressjs.com/en/advanced/best-practice-security.html)
-- [Performance best practises](https://expressjs.com/en/advanced/best-practice-performance.html)
+Meant to be consumed like this:
+```
+export `curl -H "Accept: text/x-shell-export" https://secrets-service/${PROJECT}/staging -H "Authorization: ${GCP_SERVICE_ACC}"`
+```
 
-## Docker with Node
-Guides and best practises:
-- [nodejs.org](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
-- [docker-node](https://github.com/nodejs/docker-node)
+### Endpoints
 
-## Chrome
-Guides:
-- [inspector](https://nodejs.org/en/docs/inspector/)
 
-## VS Code
-Guides:
-- [Node debugging](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
-- [Debugging TypeScript in Docker](https://github.com/Microsoft/vscode-recipes/tree/master/Docker-TypeScript)
+#### Reading Configuration in ENV compatible format
+
+**/projects/\<projectname\>**
+
+Authorization: \<JSON Service Account\>
+
+**Returns:**
+All stored variables. Pass Accept: text/x-shell-export header to get the variables as shell escaped, space separated variables
+
