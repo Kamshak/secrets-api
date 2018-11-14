@@ -2,6 +2,7 @@
   "name": "runtime-config-helper",
   "version": "0.0.0-development",
   "private": false,
+  "main": "dist/import-helper.js",
   "scripts": {
     "precommit": "lint-staged",
     "start": "node dist/server.js",
