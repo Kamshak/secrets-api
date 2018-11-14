@@ -19,5 +19,5 @@ before_install:
   -in secrets-222515-47aa6dc37fe2.json.enc -out secrets-222515-47aa6dc37fe2.json -d
 deploy:
   provider: gae
-  keyfile: "secrets-222515-47aa6dc37fe2.json.enc"
+  keyfile: "secrets-222515-47aa6dc37fe2.json"
   project: "secrets-222515"
