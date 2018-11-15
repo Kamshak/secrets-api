@@ -5,7 +5,15 @@ declare module 'shell-escape' {
 
 
 declare module '@google-cloud/rcloadenv' {
-  type Variables = { [name: string]: string };
+  interface TextVariable {
+    name: string;
+    text: string
+  }
+  interface DataVariable {
+    name: string;
+    value: string; // Base 64 encoded string
+  }
+  type Variables = (TextVariable | DataVariable)[];
   declare export function getVariables(configName: string, opts?: any): Promise<Variables>;
   declare export function transform(variables: Variables, oldEnv?: object, opts?: any): Variables;
 }

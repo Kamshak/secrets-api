@@ -1,14 +1,31 @@
 import * as rcloadenv from "@google-cloud/rcloadenv";
+import * as changeCase from "change-case";
+import { parse } from "path";
 import shellEscape = require("shell-escape");
 
 // Transforms the settings so that they can be used as arguments for the export shell builtin
 export function transformForExport(settings: { [name: string]: string }) {
   return Object.entries(settings)
     .map(([name, value]) => {
-      const escapedValue = shellEscape([value])[0];
+      const escapedValue = shellEscape([value]);
       return `${name}=${escapedValue}`;
     })
     .join(" ");
+}
+
+export function transformVarialbesToEnvCase(settings: rcloadenv.Variables) {
+  return settings.reduce((acc, variable) => {
+    const name = parse(variable.name).base.replace("-", "_");
+    const key = changeCase.snakeCase(name).toUpperCase();
+    let value;
+    if ("text" in variable) {
+      value = variable.text;
+    } else {
+      value = Buffer.from(variable.value, "base64").toString();
+    }
+    acc[key] = value;
+    return acc;
+  }, {});
 }
 
 export function get(
@@ -49,10 +66,10 @@ export function get(
       credentials,
       projectId
     })
-    .then((variables: { [name: string]: string }) => {
-      const transformed: { [name: string]: string } = rcloadenv.transform(
-        variables
-      );
+    .then(variables => {
+      const transformed: {
+        [name: string]: string;
+      } = transformVarialbesToEnvCase(variables);
 
       if (req.accepts("text/x-shell-export")) {
         res.send(transformForExport(transformed));

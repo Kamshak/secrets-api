@@ -3,7 +3,9 @@ import * as changeCase from "change-case";
 import * as request from "request-promise-native";
 
 function changeKeysToParamCase(obj: { [name: string]: string }) {
+  console.log(obj);
   return Object.entries(obj).reduce((result, [k, v]) => {
+    console.log(result, k, v);
     result[changeCase.paramCase(k)] = v;
     return result;
   }, {});
@@ -16,7 +18,7 @@ export async function importVars(
   obj: any
 ) {
   const prepared = changeKeysToParamCase(obj);
-
+  console.log(prepared);
   const client = request.defaults({
     baseUrl: "https://runtimeconfig.googleapis.com/v1beta1/",
     headers: {
