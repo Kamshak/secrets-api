@@ -16,12 +16,10 @@ before_script:
 
 jobs:
   include:
-    - stage: build
-      script: yarn build
-    - stage: npm release
-      script: npm run semantic-release
-    - stage: deploy
-      script: skip     # usually you do not want to rerun any tests
+    - stage: Deploy & Release
+      script:
+        - yarn build
+        - npm run semantic-release
       deploy:
         skip_cleanup: true
         provider: gae
