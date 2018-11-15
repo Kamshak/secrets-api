@@ -8,7 +8,7 @@ export function transformForExport(settings: { [name: string]: string }) {
   return Object.entries(settings)
     .map(([name, value]) => {
       const escapedValue = shellEscape([value]);
-      return `${name}=${escapedValue}`;
+      return `export ${name}=${escapedValue}`;
     })
     .join("\n");
 }
