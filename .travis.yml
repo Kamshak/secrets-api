@@ -16,10 +16,10 @@ before_script:
 
 jobs:
   include:
-    - stage: npm release
-      script: npm run semantic-release
     - stage: build
       script: yarn build
+    - stage: npm release
+      script: npm run semantic-release
     - stage: deploy
       script: skip     # usually you do not want to rerun any tests
       deploy:
