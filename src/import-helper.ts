@@ -4,7 +4,6 @@ import * as request from "request-promise-native";
 
 function changeKeysToParamCase(obj: { [name: string]: string }) {
   return Object.entries(obj).reduce((result, [k, v]) => {
-    console.log(result, k, v);
     result[changeCase.paramCase(k)] = v;
     return result;
   }, {});
