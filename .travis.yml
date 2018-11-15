@@ -23,6 +23,7 @@ jobs:
     - stage: deploy
       script: skip     # usually you do not want to rerun any tests
       deploy:
+        skip_cleanup: true
         provider: gae
         keyfile: "secrets-222515-47aa6dc37fe2.json"
         project: "secrets-222515"
