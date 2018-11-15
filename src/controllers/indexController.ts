@@ -1,12 +1,14 @@
 import * as rcloadenv from "@google-cloud/rcloadenv";
 import * as changeCase from "change-case";
 import { parse } from "path";
+import shellEscape = require("shell-escape");
 
 // Transforms the settings so that they can be used as arguments for the export shell builtin
 export function transformForExport(settings: { [name: string]: string }) {
   return Object.entries(settings)
     .map(([name, value]) => {
-      return `${name}=${value}`;
+      const escapedValue = shellEscape([value]);
+      return `${name}=${escapedValue}`;
     })
     .join("\n");
 }
